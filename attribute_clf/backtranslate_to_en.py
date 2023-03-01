@@ -66,7 +66,7 @@ for j, row in tqdm(train_df.iterrows(), total=len(train_df)):
         
 
 DIR = 'attribute_clf/backtranslations'
-if not os.path.exits(DIR):
+if not os.path.exists(DIR):
     os.makedirs(DIR)
 with open(os.join(DIR, 'en_%s_%s_backtranslations.pkl' % (LANGUAGE, TEMPERATURE)), 'wb') as outfile:
     pkl.dump(backtr, outfile)

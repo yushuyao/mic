@@ -127,7 +127,9 @@ def main():
             df[df['split']==s].to_csv(os.path.join(OUT_DIR,'tmp/%s.csv' % s), index=False)
     metric = load_metric("rouge")
     metric2 = load_metric("sacrebleu")
-    
+
+    # dataset = load_dataset('csv', data_files={'train': 'data/mic/MIC.csv'), 'test': 'data/mic/MIC.csv'), 'validation': 'data/mic/MIC.csv')})
+
     dataset = load_dataset('csv', data_files={'train': os.path.join(OUT_DIR,'tmp/train.csv'), 'test': os.path.join(OUT_DIR,'tmp/test.csv'), 'validation': os.path.join(OUT_DIR,'tmp/dev.csv')})
     print('train size:',len(dataset['train']))
     tokenizer = AutoTokenizer.from_pretrained(args.model_checkpoint)

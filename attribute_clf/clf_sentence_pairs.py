@@ -21,7 +21,7 @@ class CustomDataset(Dataset):
 
         self.data = data  # pandas dataframe
         #Initialize the tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(bert_model)  
+        self.tokenizer = AutoTokenizer.from_pretrained(bert_model, return_dict=False)
 
         self.maxlen = maxlen
         self.with_labels = with_labels 
@@ -75,7 +75,7 @@ class SentencePairClassifier(nn.Module):
     def __init__(self, bert_model="albert-base-v2", freeze_bert=False, labels_count=1):
         super(SentencePairClassifier, self).__init__()
         #  Instantiating BERT-based model object
-        self.bert_layer = AutoModel.from_pretrained(bert_model)
+        self.bert_layer = AutoModel.from_pretrained(bert_model, return_dict=False)
 
         #  Fix the hidden-state size of the encoder outputs (If you want to add other pre-trained models here, search for the encoder output size)
         if bert_model == "albert-base-v2":  # 12M parameters
@@ -271,8 +271,8 @@ def predict_and_save(args, model, device, dataloader, with_labels, out_prefix, s
         print("The model has been saved in {}".format(out_prefix+".pt"))
 
     print("Predicting on test data...")
-    probs = test_prediction(net=model, device=device, dataloader=val_loader, with_labels=True,  # set the with_labels parameter to False if your want to get predictions on a dataset without labels
-                    result_file=path_to_output_file)
+    probs = test_prediction(net=model, device=device, dataloader=val_loader, with_labels=True  # set the with_labels parameter to False if your want to get predictions on a dataset without labels
+                    )
     y_pred = np.argmax(probs, axis=1).flatten()
     if multilabel:
         threshold = 0.5   # adjust this threshold?
