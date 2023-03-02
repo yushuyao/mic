@@ -36,7 +36,7 @@ class CustomDataset(Dataset):
         
         encoded = {}
         
-        if args.sent2:
+        if self.sent2:
             sent1 = str(self.data.loc[index, self.sent1])
             sent2 = str(self.data.loc[index, self.sent2])
 
